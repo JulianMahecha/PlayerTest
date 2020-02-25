@@ -26,8 +26,26 @@
               ></b-form-input>
             </b-form-group>
 
-            <b-form-group id="input-group-2" label="Player Team:" label-for="input-2">
-              <b-form-input id="input-2" v-model="form.team" required placeholder="Enter Team"></b-form-input>
+            <b-form-group
+              id="input-group-1"
+              label="Player Last Name:"
+              label-for="input-1"
+            >
+              <b-form-input
+                id="input-1"
+                v-model="form.last_name"
+                type="text"
+                required
+                placeholder="Enter Last Name"
+              ></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-2" label="Player Position:" label-for="input-2">
+              <b-form-input id="input-2" v-model="form.position" required placeholder="Enter Position"></b-form-input>
+            </b-form-group>
+
+            <b-form-group id="input-group-3" label="Player Team:" label-for="input-3">
+              <b-form-input id="input-3" v-model="form.team.full_name" required placeholder="Enter Team"></b-form-input>
             </b-form-group>
 
             <b-button type="submit" variant="primary">Submit</b-button>
@@ -85,7 +103,13 @@ export default {
       },
       link: "",
       show: false,
-      form: {first_name:""
+      form: {first_name:"",
+            last_name:"",
+             position:"",
+            team:{
+              full_name:""
+            }
+             
       }
     };
   },
@@ -129,9 +153,9 @@ export default {
     },
     addPlayer(evt){
       evt.preventDefault();
-      console.log(this.players);
       this.players.unshift(this.form);
-      console.log(this.players);
+      persistence();
+      
     }
   }
 };
