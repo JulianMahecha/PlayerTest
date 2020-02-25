@@ -18,7 +18,8 @@
             id="dc-card"
           >
           <b-card-text v-if="dc.height">Height: {{ dc.height }} ft</b-card-text>
-          <b-card-text>Team: {{ dc.team }}</b-card-text>
+          <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }} </b-card-text>
+          <b-card-text></b-card-text>
           </b-card>
           
           </b-col>
@@ -26,9 +27,9 @@
 
         <!-- Información -->
 
-        <b-col md="3" v-for="player of filteredPlayer" v-bind:key="movie.id">
+        <b-col md="3" v-for="player of filteredPlayer" v-bind:key="player.id">
           <b-card
-            :title="movie.first_name + ' ' + movie.last_name"
+            :title="player.first_name + ' ' + player.last_name"
             tag="article"
             style="max-width: 20rem;"
             class="mb-2"
@@ -54,7 +55,7 @@ export default {
   name: "popular",
   data() {
     return {
-      player: [],
+      players: [],
       filter: "",
       dc:{
         "name":""
@@ -88,6 +89,7 @@ export default {
       this.dc.name = number.first_name + " " + number.last_name;
       this.dc.height = number.height_feet;
       this.dc.team = number.team.full_name;
+      this.dc.team_ab = number.team.abbreviation;
     }
   }
 };
