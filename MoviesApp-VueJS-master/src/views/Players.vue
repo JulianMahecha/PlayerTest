@@ -22,7 +22,7 @@
             size="sm"
             class="mr-sm-2"
             placeholder="Division Search"
-            v-model="filter_team"
+            v-model="filter_division"
             v-if="fill == 3"
           ></b-form-input>
         </b-container>
@@ -108,6 +108,7 @@
             <b-card-text>{{ player.overview }}</b-card-text>
             <b-card-text>Position: {{ player.position }}</b-card-text>
             <b-card-text>Team: {{ player.team.full_name }}</b-card-text>
+            <b-card-text>Division: {{ player.team.division }}</b-card-text>
             <b-button variant="btn btn-primary" @click="details(player)">See Details</b-button>
             <hr />
             <b-button variant="btn btn-danger" @click="del(index)">Delete</b-button>
@@ -130,6 +131,7 @@ export default {
       players: [],
       filter_name: "",
       filter_team: "",
+      filter_division: "",
       dc: {
         name: ""
       },
@@ -140,7 +142,8 @@ export default {
         last_name: "",
         position: "",
         team: {
-          full_name: ""
+          full_name: "",
+          division:""
         }
       },
       fill: 1
@@ -151,7 +154,7 @@ export default {
   },
   computed: {
     filteredPlayer() {
-      if (this.filter_name == "" && this.filter_team == "") {
+      if (this.filter_name == "" && this.filter_team == "" && this.filter_division == "") {
         var filtered_players = this.players;
       } else if (this.filter_name != "") {
         var filtered_players = this.players.filter(item => {
@@ -159,9 +162,9 @@ export default {
         });
       } else if (this.filter_team != "") {
         var filtered_players = this.players.filter(item => {
-          return _.includes(item.team.name.toLowerCase(), this.filter_team);
+          return _.includes(item.team.full_name.toLowerCase(), this.filter_team);
         });
-      }else if (this.filter_team != "") {
+      }else if (this.filter_division != "") {
         var filtered_players = this.players.filter(item => {
           return _.includes(item.team.division.toLowerCase(), this.filter_division);
         });
