@@ -6,7 +6,6 @@
         <b-container class="p-2">
           <b-form-input size="sm" class="mr-sm-2" placeholder="Name Search" v-model="filter"></b-form-input>
         </b-container>
-        <button @click="traer()"></button>
         <!-- Información -->
         <b-container v-if="dc.name" class="p-4">
           <b-col>
@@ -77,7 +76,7 @@ export default {
         .get("https://www.balldontlie.io/api/v1/players")
         .then(res => {
           this.players = res.data.data;
-          localStorage.setItem("jugadores", JSON.stringify(this.players));
+          this.persistence();
         })
         .catch(err => {
           console.log(err);
@@ -93,9 +92,10 @@ export default {
     del(id) {
       console.log(id);
       this.players.splice(id, 1);
+      this.persistence();
     },
-    traer(){
-      JSON.parse(localStorage.getItem("jugadores"));
+    persistence(){
+      localStorage.setItem("players", JSON.stringify(this.players));
     }
   }
 };
