@@ -6,6 +6,15 @@
         <b-container class="p-2">
           <b-form-input size="sm" class="mr-sm-2" placeholder="Name Search" v-model="filter"></b-form-input>
         </b-container>
+        <b-container class="p-2">
+          <div>
+            <b-button v-b-modal.modal-1>Add Player</b-button>
+            <b-modal id="modal-1" title="PlayerModal">
+        
+            </b-modal>
+          </div>
+        </b-container>
+
         <!-- Información -->
         <b-container v-if="dc.name" class="p-4">
           <b-col>
@@ -55,7 +64,7 @@ export default {
       dc: {
         name: ""
       },
-      link:""
+      link: ""
     };
   },
   created() {
@@ -90,11 +99,10 @@ export default {
       this.dc.division = number.team.division;
     },
     del(id) {
-      console.log(id);
       this.players.splice(id, 1);
       this.persistence();
     },
-    persistence(){
+    persistence() {
       localStorage.setItem("players", JSON.stringify(this.players));
     }
   }
