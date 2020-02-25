@@ -4,7 +4,7 @@
       <b-row class="text-center">
         <!-- Iteración -->
         <b-container class="p-2">
-          <b-form-input size="sm" class="mr-sm-2" placeholder="Busqueda" v-model="filter"></b-form-input>
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Name Search" v-model="filter"></b-form-input>
         </b-container>
 
         <!-- Información -->
@@ -28,7 +28,7 @@
 
         <!-- Información -->
 
-        <b-col md="3" v-for="player of filteredPlayer" v-bind:key="player.id">
+        <b-col md="3" v-for="(player, index) of filteredPlayer" v-bind:key="player.id">
           <b-card
             :title="player.first_name + ' ' + player.last_name"
             tag="article"
@@ -40,6 +40,8 @@
             <b-card-text>Position: {{ player.position }}</b-card-text>
             <b-card-text>Team: {{ player.team.full_name }}</b-card-text>
             <b-button variant="btn btn-primary" @click="details(player)">See Details</b-button>
+            <hr>
+            <b-button variant="btn btn-danger" @click="del(index)">Delete</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -92,6 +94,10 @@ export default {
       this.dc.team = number.team.full_name;
       this.dc.team_ab = number.team.abbreviation;
       this.dc.division = number.team.division;
+    },
+    del(id){
+     console.log(id);
+     this.players.splice(id, 1);
     }
   }
 };
