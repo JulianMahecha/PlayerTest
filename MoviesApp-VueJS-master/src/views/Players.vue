@@ -8,7 +8,7 @@
         </b-container>
 
         <!-- Información -->
-        <b-container v-if="dc.name" class="p-3">
+        <b-container v-if="dc.name" class="p-4">
           <b-col>
             <b-card
             :title=dc.name
@@ -18,7 +18,8 @@
             id="dc-card"
           >
           <b-card-text v-if="dc.height">Height: {{ dc.height }} ft</b-card-text>
-          <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }} </b-card-text>
+          <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }}</b-card-text>
+          <b-card-text>Division: {{ dc.division }}</b-card-text>
           <b-card-text></b-card-text>
           </b-card>
           
@@ -90,6 +91,7 @@ export default {
       this.dc.height = number.height_feet;
       this.dc.team = number.team.full_name;
       this.dc.team_ab = number.team.abbreviation;
+      this.dc.division = number.team.division;
     }
   }
 };
