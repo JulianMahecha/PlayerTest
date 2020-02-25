@@ -7,12 +7,11 @@
           <b-form-input size="sm" class="mr-sm-2" placeholder="Name Search" v-model="filter"></b-form-input>
         </b-container>
         <b-container class="p-2">
-          <div>
-            <b-button v-b-modal.modal-1>Add Player</b-button>
-            <b-modal id="modal-1" title="PlayerModal">
-        
-            </b-modal>
-          </div>
+            <b-button variant="btn btn-success" v-if="!form" @click="form = !form">Add Player</b-button>
+            <b-button variant="btn btn-danger" v-if="form" @click="form = !form">Close Form</b-button>
+        </b-container>
+        <b-container class="p-2" v-if="form">
+          
         </b-container>
 
         <!-- Información -->
@@ -64,7 +63,8 @@ export default {
       dc: {
         name: ""
       },
-      link: ""
+      link: "",
+      form: false
     };
   },
   created() {
