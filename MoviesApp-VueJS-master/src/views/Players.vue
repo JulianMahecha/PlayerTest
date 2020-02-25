@@ -26,7 +26,7 @@
 
         <!-- Información -->
 
-        <b-col md="3" v-for="movie of filteredMovie" v-bind:key="movie.id">
+        <b-col md="3" v-for="player of filteredPlayer" v-bind:key="movie.id">
           <b-card
             :title="movie.first_name + ' ' + movie.last_name"
             tag="article"
@@ -34,10 +34,10 @@
             class="mb-2"
           >
             <!-- Texto de tarjeta -->
-            <b-card-text>{{ movie.overview }}</b-card-text>
-            <b-card-text>Position: {{ movie.position }}</b-card-text>
-            <b-card-text>Team: {{ movie.team.full_name }}</b-card-text>
-            <b-button variant="btn btn-primary" @click="details(movie)">See Details</b-button>
+            <b-card-text>{{ player.overview }}</b-card-text>
+            <b-card-text>Position: {{ player.position }}</b-card-text>
+            <b-card-text>Team: {{ player.team.full_name }}</b-card-text>
+            <b-button variant="btn btn-primary" @click="details(player)">See Details</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -54,7 +54,7 @@ export default {
   name: "popular",
   data() {
     return {
-      movies: [],
+      player: [],
       filter: "",
       dc:{
         "name":""
@@ -65,10 +65,10 @@ export default {
     this.fetch();
   },
   computed: {
-    filteredMovie() {
+    filteredPlayer() {
       return this.filter == ""
-        ? this.movies
-        : this.movies.filter(item => {
+        ? this.players
+        : this.players.filter(item => {
             return _.includes(item.first_name.toLowerCase(), this.filter);
           });
     }
@@ -78,7 +78,7 @@ export default {
       let results = axios
         .get("https://www.balldontlie.io/api/v1/players")
         .then(res => {
-          this.movies = res.data.data;
+          this.players = res.data.data;
         })
         .catch(err => {
           console.log(err);
