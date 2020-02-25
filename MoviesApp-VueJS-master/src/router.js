@@ -14,7 +14,7 @@ export default new Router({
       component: Upcoming
     },
     {
-      path: '/top-rated',
+      path: '/top-rated/:id',
       name: 'top',
       component: TopRated
     },

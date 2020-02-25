@@ -5,6 +5,7 @@
         <!-- Iteración -->
         <b-container class="p-2"><b-form-input size="sm" class="mr-sm-2" placeholder="Busqueda" v-model="filter"></b-form-input></b-container>
         <b-col md="3" v-for="movie of filteredMovie" v-bind:key="movie.id">
+          <h1>sportman</h1>
           <b-card
             :title="movie.title"
             :img-src='"https://image.tmdb.org/t/p/w1280/"+movie.poster_path'
@@ -29,6 +30,7 @@
 <script>
 // @ is an alias to /src
 import axios from "axios";
+
 
 export default {
   name: "top-rated",

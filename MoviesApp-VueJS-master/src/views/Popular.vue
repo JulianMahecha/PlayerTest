@@ -3,22 +3,41 @@
     <b-container class="mx-auto">
       <b-row class="text-center">
         <!-- Iteración -->
-        <b-container class="p-2"><b-form-input size="sm" class="mr-sm-2" placeholder="Busqueda" v-model="filter"></b-form-input></b-container>
+        <b-container class="p-2">
+          <b-form-input size="sm" class="mr-sm-2" placeholder="Busqueda" v-model="filter"></b-form-input>
+        </b-container>
+
+        <!-- Información -->
+        <b-container v-if="dc.name" class="p-3">
+          <b-col>
+            <b-card
+            :title=dc.name
+            tag="article"
+            style=""
+            class="mb-2"
+            id="dc-card"
+          >
+          <b-card-text v-if="dc.height">Height: {{ dc.height }} ft</b-card-text>
+          <b-card-text>Team: {{ dc.team }}</b-card-text>
+          </b-card>
+          
+          </b-col>
+        </b-container>
+
+        <!-- Información -->
+
         <b-col md="3" v-for="movie of filteredMovie" v-bind:key="movie.id">
           <b-card
-            :title="movie.first_name"
+            :title="movie.first_name + ' ' + movie.last_name"
             tag="article"
             style="max-width: 20rem;"
             class="mb-2"
           >
             <!-- Texto de tarjeta -->
             <b-card-text>{{ movie.overview }}</b-card-text>
-            <b-card-text>Calification: {{ movie.vote_average }}</b-card-text>
-
-            <b-button
-              :href='"https://www.themoviedb.org/movie/"+movie.id'
-              variant="primary"
-            >See Details</b-button>
+            <b-card-text>Position: {{ movie.position }}</b-card-text>
+            <b-card-text>Team: {{ movie.team.full_name }}</b-card-text>
+            <b-button variant="btn btn-primary" @click="details(movie)">See Details</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -36,7 +55,10 @@ export default {
   data() {
     return {
       movies: [],
-      filter: ""
+      filter: "",
+      dc:{
+        "name":""
+      }
     };
   },
   created() {
@@ -54,16 +76,18 @@ export default {
   methods: {
     fetch() {
       let results = axios
-        .get(
-          "https://www.balldontlie.io/api/v1/players"
-        )
+        .get("https://www.balldontlie.io/api/v1/players")
         .then(res => {
           this.movies = res.data.data;
-          console.log(res.data)
         })
         .catch(err => {
           console.log(err);
         });
+    },
+    details(number) {
+      this.dc.name = number.first_name + " " + number.last_name;
+      this.dc.height = number.height_feet;
+      this.dc.team = number.team.full_name;
     }
   }
 };
