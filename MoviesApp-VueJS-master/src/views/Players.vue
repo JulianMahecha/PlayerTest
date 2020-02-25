@@ -6,23 +6,16 @@
         <b-container class="p-2">
           <b-form-input size="sm" class="mr-sm-2" placeholder="Name Search" v-model="filter"></b-form-input>
         </b-container>
-
+        <button @click="traer()"></button>
         <!-- Información -->
         <b-container v-if="dc.name" class="p-4">
           <b-col>
-            <b-card
-            :title=dc.name
-            tag="article"
-            style=""
-            class="mb-2"
-            id="dc-card"
-          >
-          <b-card-text v-if="dc.height">Height: {{ dc.height }} ft</b-card-text>
-          <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }}</b-card-text>
-          <b-card-text>Division: {{ dc.division }}</b-card-text>
-          <b-card-text></b-card-text>
-          </b-card>
-          
+            <b-card :title="dc.name" tag="article" style class="mb-2" id="dc-card">
+              <b-card-text v-if="dc.height">Height: {{ dc.height }} ft</b-card-text>
+              <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }}</b-card-text>
+              <b-card-text>Division: {{ dc.division }}</b-card-text>
+              <b-card-text></b-card-text>
+            </b-card>
           </b-col>
         </b-container>
 
@@ -40,7 +33,7 @@
             <b-card-text>Position: {{ player.position }}</b-card-text>
             <b-card-text>Team: {{ player.team.full_name }}</b-card-text>
             <b-button variant="btn btn-primary" @click="details(player)">See Details</b-button>
-            <hr>
+            <hr />
             <b-button variant="btn btn-danger" @click="del(index)">Delete</b-button>
           </b-card>
         </b-col>
@@ -60,9 +53,10 @@ export default {
     return {
       players: [],
       filter: "",
-      dc:{
-        "name":""
-      }
+      dc: {
+        name: ""
+      },
+      link:""
     };
   },
   created() {
@@ -83,6 +77,7 @@ export default {
         .get("https://www.balldontlie.io/api/v1/players")
         .then(res => {
           this.players = res.data.data;
+          localStorage.setItem("jugadores", JSON.stringify(this.players));
         })
         .catch(err => {
           console.log(err);
@@ -95,9 +90,12 @@ export default {
       this.dc.team_ab = number.team.abbreviation;
       this.dc.division = number.team.division;
     },
-    del(id){
-     console.log(id);
-     this.players.splice(id, 1);
+    del(id) {
+      console.log(id);
+      this.players.splice(id, 1);
+    },
+    traer(){
+      JSON.parse(localStorage.getItem("jugadores"));
     }
   }
 };
