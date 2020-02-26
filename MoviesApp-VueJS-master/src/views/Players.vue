@@ -175,12 +175,6 @@ export default {
       }
 
       return filtered_players;
-
-      /* return this.filter_name == ""
-        ? this.players
-        : this.players.filter(item => {
-            return _.includes(item.first_name.toLowerCase(), this.filter_name);
-          }); */
     }
   },
   methods: {
