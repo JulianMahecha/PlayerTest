@@ -1,7 +1,6 @@
 # Player Test - VueJS
-.
 
-Despliegue:
+
 
 ## Project setup
 ```
