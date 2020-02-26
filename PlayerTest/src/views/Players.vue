@@ -1,8 +1,9 @@
 <template>
   <div class="top-rated p-2">
+    <!-- Search Fields -->
     <b-container class="mx-auto">
       <b-row class="text-center">
-        <!-- Iteración -->
+        <!-- Iteration -->
         <b-container class="p-2">
           <b-form-input
             size="sm"
@@ -26,7 +27,7 @@
             v-if="fill == 3"
           ></b-form-input>
         </b-container>
-
+        <!-- Fill Buttons -->
         <b-container>
           <b-button-group>
             <b-button variant="primary" @click="fill = 1, filter_team = '', filter_division = ''">Name</b-button>
@@ -38,8 +39,9 @@
           <b-button variant="btn btn-success" v-if="!show" @click="show = !show">Add Player</b-button>
           <b-button variant="btn btn-danger" v-if="show" @click="show = !show">Close Form</b-button>
         </b-container>
+        <!-- Player Form -->
         <b-container class="p-2" v-if="show">
-          <b-form @submit="addPlayer" v-if="form">
+          <b-form  @submit="addPlayer" v-if="form">
             <b-form-group id="input-group-1" label="Player Name:" label-for="input-1">
               <b-form-input
                 id="input-fn"
@@ -82,7 +84,7 @@
           </b-form>
         </b-container>
 
-        <!-- Información -->
+        <!-- Card Information -->
         <b-container v-if="dc.name" class="p-4">
           <b-col>
             <b-card :title="dc.name" tag="article" style class="mb-2" id="dc-card">
@@ -90,12 +92,11 @@
               <b-card-text>Team: {{ dc.team }} {{ dc.team_ab }}</b-card-text>
               <b-card-text>Conference: {{ dc.conference }}</b-card-text>
               <b-card-text>Division: {{ dc.division }}</b-card-text>
-              <b-card-text></b-card-text>
             </b-card>
           </b-col>
         </b-container>
 
-        <!-- Información -->
+        <!-- Information -->
 
         <b-col md="3" v-for="(player, index) of filteredPlayer" v-bind:key="player.id">
           <b-card
@@ -104,7 +105,8 @@
             style="max-width: 20rem;"
             class="mb-2"
           >
-            <!-- Texto de tarjeta -->
+            <b-card-body>
+            <!-- Card Text -->
             <b-card-text>{{ player.overview }}</b-card-text>
             <b-card-text>Position: {{ player.position }}</b-card-text>
             <b-card-text>Team: {{ player.team.full_name }}</b-card-text>
@@ -112,6 +114,8 @@
             <b-button variant="btn btn-primary" @click="details(player)">See Details</b-button>
             <hr />
             <b-button variant="btn btn-danger" @click="del(index)">Delete</b-button>
+            </b-card-body>
+            <b-button variant="light" @click="edit(player, index)">Edit</b-button>
           </b-card>
         </b-col>
       </b-row>
@@ -171,12 +175,6 @@ export default {
       }
 
       return filtered_players;
-
-      /* return this.filter_name == ""
-        ? this.players
-        : this.players.filter(item => {
-            return _.includes(item.first_name.toLowerCase(), this.filter_name);
-          }); */
     }
   },
   methods: {
@@ -219,7 +217,22 @@ export default {
         }
       };
       this.show = false;
+    },
+    edit(player, index){
+      this.show = true;
+      this.editBtn = true
+      this.form = {
+        first_name: player.first_name,
+        last_name: player.last_name,
+        position: player.position,
+        team: {
+          full_name: player.team.full_name,
+          division: player.team.division
+        }
+      };
+      this.players.splice(index, 1);
+      this.persistence();
     }
   }
-};
+}
 </script>
